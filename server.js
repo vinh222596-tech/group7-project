@@ -38,5 +38,5 @@ const PORT = process.env.PORT || 5000;
 // ⚡ Không được thiếu phần callback này nhé
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log("This is from frontend branch");
 });
-
