@@ -5,6 +5,11 @@ function UserList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    email: ''
+  });
 
   useEffect(() => {
     fetchUsers();
@@ -30,6 +35,32 @@ function UserList() {
     }
   };
 
+  const handleEdit = (user) => {
+    setEditingId(user._id);
+    setEditFormData({
+      name: user.name,
+      email: user.email
+    });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await axios.put(`http://localhost:3000/users/${editingId}`, editFormData);
+      setEditingId(null);
+      fetchUsers();
+    } catch (err) {
+      setError('Lỗi cập nhật người dùng');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   if (loading) return <div>Đang tải...</div>;
   if (error) return <div>{error === 'Error fetching users' ? 'Lỗi tải danh sách người dùng' : error}</div>;
 
@@ -47,21 +78,56 @@ function UserList() {
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
               <td>
-                <button
-                  onClick={() => window.location.href = `/edit-user/${user._id}`}
-                  className="edit-btn"
-                >
-                  Sửa
-                </button>
-                <button
-                  onClick={() => handleDelete(user._id)}
-                  className="delete-btn"
-                >
-                  Xóa
-                </button>
+                {editingId === user._id ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={editFormData.name}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.name
+                )}
+              </td>
+              <td>
+                {editingId === user._id ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={editFormData.email}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>
+              <td>
+                {editingId === user._id ? (
+                  <>
+                    <button onClick={handleUpdate} className="save-btn">
+                      Lưu
+                    </button>
+                    <button onClick={() => setEditingId(null)} className="cancel-btn">
+                      Hủy
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => handleEdit(user)}
+                      className="edit-btn"
+                    >
+                      Sửa
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user._id)}
+                      className="delete-btn"
+                    >
+                      Xóa
+                    </button>
+                  </>
+                )}
               </td>
             </tr>
           ))}
