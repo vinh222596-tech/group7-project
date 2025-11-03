@@ -1,0 +1,136 @@
+.app-container {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+gap: 24px;
+}
+
+.main-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 18px 22px;
+background: var(--surface);
+border-radius: var(--card-radius);
+
+box-shadow: var(--shadow-sm);
+margin: 18px auto;
+width: calc(100% - 48px);
+max-width: 1100px;
+}
+
+.main-header h1 {
+margin: 0;
+font-size: 1.25rem;
+letter-spacing: 0.2px;
+color: var(--text);
+}
+
+main {
+width: calc(100% - 48px);
+max-width: 1100px;
+margin: 0 auto 48px;
+padding: 24px;
+background: var(--surface);
+border-radius: var(--card-radius);
+
+box-shadow: var(--shadow-sm);
+}
+
+.avatar-container {
+position: relative;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.avatar {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+object-fit: cover;
+border: 2px solid var(--accent);
+
+box-shadow: var(--shadow-sm);
+}
+
+.dropdown-menu {
+position: absolute;
+right: 0;
+top: calc(100% + 10px);
+min-width: 160px;
+background: var(--surface-alt);
+border-radius: 12px;
+
+box-shadow: var(--shadow-md);
+padding: 8px 8px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+z-index: 50;
+}
+
+.dropdown-menu a, .dropdown-menu button {
+text-decoration: none;
+color: var(--text);
+padding: 8px 12px;
+border-radius: 8px;
+background: transparent;
+border: none;
+text-align: left;
+}
+
+.dropdown-menu a:hover, .dropdown-menu button:hover {
+
+color: var(--text);
+}
+
+.login-btn {
+background: var(--accent);
+color: white;
+border: none;
+padding: 8px 14px;
+border-radius: 10px;
+font-weight: 600;
+
+box-shadow: var(--shadow-sm);
+transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+
+.login-btn:hover {
+transform: translateY(-1px);
+box-shadow: var(--shadow-md);
+opacity: 0.98;
+}
+
+@media (max-width: 640px) {
+.main-header, main { width: calc(100% - 24px); margin-left: 12px; margin-right: 12px; }
+.avatar { width: 40px; height: 40px; }
+.main-header h1 { font-size: 1.05rem; }
+}
+
+.post-list {
+    column-count: 4;
+    column-gap: 20px;
+}
+
+.post-item {
+    background: var(--surface-alt);
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-sm);
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.post-item h3 {
+    margin: 10px;
+    font-size: 1.1rem;
+}
+
+.post-item p {
+    margin: 0 10px 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}

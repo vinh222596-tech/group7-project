@@ -1,102 +1,45 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
-import './App.css'
-import UserList from './components/UserList'
-import AddUser from './components/AddUser'
-import AdminRoute from './components/AdminRoute'
-import Login from './components/Login'
-import Register from './components/Register'
-import ForgotPassword from './components/ForgotPassword'
-import axios from 'axios'
 import Home from './pages/Home'
-function Header() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:3000/logout');
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      setUser(null);
-      navigate('/');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
-
-  return (
-    <header className="app-header">
-      <div className="logo">
-        <Link to="/"></Link>
-      </div>
-      <div className="auth-section">
-        {user ? (
-          <div className="avatar-container">
-            <div 
-              className="avatar" 
-              onClick={() => setShowDropdown(!showDropdown)}
-            >
-              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-            </div>
-            {showDropdown && (
-              <div className="dropdown-menu">
-                <Link to="/profile" className="dropdown-item">
-                  Trang cá nhân
-                </Link>
-                <button 
-                  onClick={handleLogout} 
-                  className="dropdown-item"
-                >
-                  Đăng xuất
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <Link to="/login" className="login-button">
-            Đăng nhập
-          </Link>
-        )}
-      </div>
-    </header>
-  );
-}
+import LoginPage from './pages/Auth/LoginPage'
+import RegisterPage from './pages/Auth/RegisterPage'
+import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage'
+import ResetPasswordPage from './pages/Auth/ResetPasswordPage'
+import ProfilePage from './pages/Users/ProfilePage'
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import ProtectedRoute from './components/Auth/ProtectedRoute'
+import AdminRoute from './components/Admin/AdminRoute.jsx'
+import AdminLoginPage from './pages/Admin/AdminLoginPage.jsx';
+import UserPage from './pages/Admin/UserPage.jsx'
 
 function App() {
+
   return (
-    <Router>
-      <div className="app-container">
-        <Header />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/users" element={
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/" element = {<Home/>}>
+            <Route index element={<></>} />
+            <Route path = "profile" element = {
+              <ProtectedRoute>
+                <ProfilePage/>
+              </ProtectedRoute>
+            }/>
+          </Route>
+          <Route path = "/login" element = {<LoginPage/>}/>
+          <Route path = "/register" element = {<RegisterPage/>}/>
+          <Route path = "/reset-password" element = {<ForgotPasswordPage/>}/>
+          <Route path = "/reset-password/:token" element = {<ResetPasswordPage/>}/>
+          <Route path = "/admin/login" element = {<AdminLoginPage/>}/>
+          <Route path = "/admin" element = {
+            <ProtectedRoute>
               <AdminRoute>
-                <UserList />
+                <UserPage/>
               </AdminRoute>
-            } />
-            <Route path="/add" element={
-              <AdminRoute>
-                <AddUser />
-              </AdminRoute>
-            } />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/profile" element={<div>Trang cá nhân</div>} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+            </ProtectedRoute>
+          }/>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
