@@ -1,0 +1,149 @@
+body {
+background-color: var(--bg);
+color: var(--text);
+}
+
+.user-page-container {
+padding: 2rem;
+}
+
+.user-page-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 2rem;
+}
+
+.header-title {
+font-size: 2rem;
+color: var(--text);
+}
+
+button {
+padding: 0.5rem 1rem;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: var(--shadow-sm);
+}
+
+button:hover {
+opacity: 0.9;
+transform: translateY(-1px);
+}
+
+.add-btn {
+background-color: var(--accent);
+color: white;
+}
+
+.user-page-content {
+background-color: var(--surface);
+padding: 2rem;
+border-radius: 15px;
+box-shadow: var(--shadow-sm);
+}
+
+.user-list {
+display: grid;
+gap: 1.5rem;
+}
+
+.user-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1.5rem;
+background-color: var(--surface-alt);
+border-radius: 10px;
+box-shadow: var(--shadow-sm);
+}
+
+.user-item-info p {
+margin: 0;
+color: var(--text);
+}
+
+.user-item-info p strong {
+color: var(--accent);
+}
+
+.user-item-actions {
+display: flex;
+gap: 1rem;
+}
+
+.edit-btn {
+background-color: #f1f3f6;
+color: var(--text);
+}
+
+.delete-btn {
+background-color: var(--danger);
+color: white;
+}
+
+.form-container {
+background-color: var(--surface-alt);
+padding: 2rem;
+border-radius: 15px;
+margin-top: 2rem;
+box-shadow: var(--shadow-sm);
+}
+
+.form-container h3 {
+color: var(--text);
+margin-bottom: 1.5rem;
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+}
+
+.form-group label {
+display: block;
+color: var(--muted);
+margin-bottom: 0.5rem;
+}
+
+.form-group input {
+width: 100%;
+padding: 0.75rem;
+border: none;
+border-radius: 8px;
+background-color: var(--bg);
+color: var(--text);
+box-shadow: var(--shadow-inset);
+}
+
+.form-group input:focus {
+outline: none;
+box-shadow: var(--shadow-inset-focus);
+}
+
+.form-actions {
+display: flex;
+gap: 1rem;
+}
+
+.submit-btn {
+background-color: var(--accent);
+color: white;
+}
+
+.cancel-btn {
+background-color: #f1f3f6;
+color: var(--text);
+}
+.loading-message, .error-message, .no-users-message {
+text-align: center;
+padding: 1rem;
+border-radius: 8px;
+margin: 1rem 0;
+}
+
+.error-message {
+background-color: var(--danger-bg);
+color: var(--danger);
+}
