@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
   }
 });
 const uploadCloudinary = multer({ storage: storage });
-import {getUsers, postUsers, deleteUsers, updateUsers, register, login, logout, getProfile, updateProfileName, forgotPassword, resetPassword, uploadAvatar} from '../controllers/userController.js';
+import {getUsers, postUsers, deleteUsers, updateUsers, register, login, logout, getProfile, updateProfileName, forgotPassword, resetPassword, uploadAvatar, deleteUser} from '../controllers/userController.js';
 
 import { checkJWT } from '../middleware/checkJWT.js';
 import { checkRole } from '../middleware/checkrole.js';
