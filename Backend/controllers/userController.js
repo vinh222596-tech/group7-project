@@ -1,8 +1,7 @@
 import userModel from '../models/useModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import crypto from 'crypto';
+
 export const getUsers = async (req, res) => { 
     try {
         const users = await userModel.find().select("-password");
@@ -100,6 +99,38 @@ export const logout = async (req, res) => {
     try {
         res.clearCookie("jwt");
         return res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export const getProfile = async (req, res) => { 
+    try {
+        const user = await userModel.findById(req.userId).select("-password");
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({
+            message: "Profile fetched successfully",
+            user: user,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export const updateProfileName = async (req, res) => { 
+    try {
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({ message: "Name is required" });
+        }
+        const user = await userModel.findByIdAndUpdate(req.userId, { name });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+        return res.status(200).json({
+            message: "Profile updated successfully",
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
